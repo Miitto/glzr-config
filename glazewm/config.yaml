@@ -351,11 +351,7 @@ keybindings:
   - commands: ["move-workspace --direction left"]
     bindings: ["lwin+shift+a"]
   - commands: ["move-workspace --direction right"]
-    bindings: ["lwin+shift+f"]
-  - commands: ["move-workspace --direction up"]
     bindings: ["lwin+shift+d"]
-  - commands: ["move-workspace --direction down"]
-    bindings: ["lwin+shift+s"]
 
   # Move focused window to a workspace defined in `workspaces` config.
   - commands: ["move --workspace 1", "focus --workspace 1"]
