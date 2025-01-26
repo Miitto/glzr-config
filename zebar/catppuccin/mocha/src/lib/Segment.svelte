@@ -1,9 +1,9 @@
 <script lang="ts">
-	let { children } = $props();
+	let { children, class: cls = '' } = $props();
 </script>
 
 <section
-	class="flex-wrap-0 flex h-full w-fit flex-row items-center gap-x-2 rounded-full bg-base px-2 py-0.5"
+	class={`${cls} flex-wrap-0 flex h-[20px] w-fit max-w-full flex-row items-center justify-center gap-x-2 overflow-hidden rounded-full bg-base px-2`}
 >
 	{@render children()}
 </section>

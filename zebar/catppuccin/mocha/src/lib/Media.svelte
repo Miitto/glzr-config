@@ -24,7 +24,7 @@
 		<Play size={20} />
 	{/if}
 </button>
-<span>{title}</span>
+<span class="truncate text-nowrap">{title}</span>
 <span>-</span>
 <span>{artist}</span>
 <button onclick={() => config.next()}>

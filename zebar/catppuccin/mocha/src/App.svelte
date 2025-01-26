@@ -18,9 +18,7 @@
 		output.glazewm?.currentWorkspaces.find((workspace) => workspace.hasFocus)
 	);
 
-	let window_name = $derived(
-		truncate(get_focused_name(focused_workspace?.children ?? []), 25, true)
-	);
+	let window_name = $derived(get_focused_name(focused_workspace?.children ?? []));
 
 	let last_window_name = $state();
 
@@ -29,21 +27,6 @@
 
 		untrack(() => (last_window_name = window_name));
 	});
-
-	function truncate(str: string, n: number, useWordBoundary: boolean) {
-		if (!str) return null;
-
-		if (str.endsWith('.exe')) {
-			str = str.slice(0, -4);
-		}
-		if (str.length <= n) {
-			return str;
-		}
-
-		const subString = str.slice(0, n - 1);
-
-		return (useWordBoundary ? subString.slice(0, subString.lastIndexOf(' ')) : subString) + '...';
-	}
 
 	function get_focused_name(list: any[]) {
 		for (let e of list) {
@@ -65,39 +48,43 @@
 	let date = $derived(output.date?.formatted);
 </script>
 
-<main class="grid h-full w-full grid-cols-3 items-center px-4 py-1 text-sm text-text">
-	<Segment>
-		<div class="flex flex-row items-center gap-x-4">
-			{#if date}
-				<div>{date}</div>
-			{/if}
-		</div></Segment
-	>
+<main class="grid h-full w-full grid-cols-3 items-center gap-x-4 px-4 text-sm text-text">
+	<div class="flex flex-row items-center justify-start">
+		<Segment>
+			<div class="flex flex-row items-center gap-x-4">
+				{#if date}
+					<div>{date}</div>
+				{/if}
+			</div></Segment
+		>
+	</div>
 
-	<div class="flex flex-row items-center justify-center">
+	<div class="flex max-w-full flex-row items-center justify-center overflow-hidden">
 		<Segment>
 			<!-- Center -->
 			{#if output.glazewm}
-				{#each output.glazewm!.currentWorkspaces as workspace (workspace.name)}
-					<!-- svelte-ignore a11y_role_supports_aria_props_implicit -->
-					<button
-						class="flex h-full flex-row items-center rounded-full px-2 text-base text-xs text-text transition-[padding] aria-selected:bg-subtext1 aria-selected:px-4 aria-selected:text-base aria-selected:text-xs"
-						aria-selected={workspace.hasFocus}
-						onclick={() => output.glazewm!.runCommand(`focus --workspace ${workspace.name}`)}
-						>{workspace.displayName ?? workspace.name}</button
-					>
-				{/each}
+				<div class="flex flex-row items-center justify-center py-0.5">
+					{#each output.glazewm!.currentWorkspaces as workspace (workspace.name)}
+						<!-- svelte-ignore a11y_role_supports_aria_props_implicit -->
+						<button
+							class="flex h-full flex-row items-center rounded-full px-2 text-base text-xs text-text transition-[padding] aria-selected:bg-subtext1 aria-selected:px-4 aria-selected:text-base aria-selected:text-xs"
+							aria-selected={workspace.hasFocus}
+							onclick={() => output.glazewm!.runCommand(`focus --workspace ${workspace.name}`)}
+							>{workspace.displayName ?? workspace.name}</button
+						>
+					{/each}
+				</div>
 
-				<span class="text-xs">
-					{#if window_name || last_window_name}
+				{#if window_name || last_window_name}
+					<span class="truncate text-nowrap text-xs">
 						{window_name ?? last_window_name}
-					{/if}
-				</span>
+					</span>
+				{/if}
 			{/if}
 		</Segment>
 	</div>
 
-	<div class="flex flex-grow flex-row justify-end gap-x-4">
+	<div class="flex max-w-full flex-row items-center justify-end gap-x-4 overflow-hidden">
 		<Segment>
 			<Media config={output.media} />
 		</Segment>
