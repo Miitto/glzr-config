@@ -85,9 +85,7 @@
 	</div>
 
 	<div class="flex max-w-full flex-row items-center justify-end gap-x-4 overflow-hidden">
-		<Segment>
-			<Media config={output.media} />
-		</Segment>
+		<Media config={output.media} />
 		<Segment>
 			{#if output.glazewm}
 				<!--
