@@ -167,7 +167,7 @@ window_behavior:
             centered: true
 
             # Whether to show floating windows as always on top.
-            shown_on_top: true
+            shown_on_top: false
 
         fullscreen:
             # Maximize the window if possible. If the window doesn't have a
@@ -257,6 +257,9 @@ window_rules:
           - window_process: { equals: "bf6event" }
           # Arena breakout infinite
           - window_process: { equals: "UAGame" }
+          - window_process: { equals: "EscapeFromTarkov" }
+          - window_process: { equals: "bf1" }
+          - window_process: { equals: "BF2042" }
 
           # Ignores picture-in-picture windos for browsers.
           - window_title: { regex: "[Pp]ictue.in.[Pp]icture" }
