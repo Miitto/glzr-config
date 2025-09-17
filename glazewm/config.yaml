@@ -33,7 +33,8 @@ general:
     # Commands to run when the WM has started. This is useful for running a
     # script or launching another application.
     # Example: The below command launches Zebar.
-    startup_commands: ["shell-exec zebar startup -q"]
+    startup_commands:
+        - "shell-exec zebar startup -q"
 
     # Commands to run just before the WM is shutdown.
     # Example: The below command kills Zebar.
@@ -99,16 +100,11 @@ window_effects:
         border:
             enabled: true
             color: *lavender
-            smart:
-                enabled: true
-                color: *lavender
 
         # Remove the title bar from the window's frame. Note that this can
         # cause rendering issues for some applications.
         hide_title_bar:
             enabled: false
-            smart:
-                enabled: false
 
         # Change the corner style of the window's frame.
         # ** Exclusive to Windows 11 due to API limitations.
@@ -116,25 +112,16 @@ window_effects:
             enabled: false
             # Allowed values: 'square', 'rounded', 'small_rounded'.
             style: "square"
-            smart:
-                enabled: true
-                style: "square"
 
         transparency:
             enabled: false
             opacity: 0.9
-            smart:
-                enabled: false
-                opacity: 1
 
     # Visual effects to apply to non-focused windows.
     other_windows:
         border:
             enabled: true
             color: *overlay0
-            smart:
-                enabled: false
-                color: *overlay0
 
         hide_title_bar:
             enabled: false
@@ -142,16 +129,10 @@ window_effects:
         corner_style:
             enabled: false
             style: "square"
-            smart:
-                enabled: true
-                style: "square"
 
         transparency:
             enabled: false
             opacity: 0.9
-            smart:
-                enabled: false
-                opacity: 1
 
 window_behavior:
     # New windows are created in this state whenever possible.
@@ -211,6 +192,20 @@ window_rules:
           - window_process:
                 { regex: "Spotify|itunes|music|youtube-music-desktop-app" }
 
+    - commands: ["set-tiling"]
+      match:
+          - window_process: { equals: "devenv" } # Visual Studio
+            window_title: { not_regex: "(Rename|Search|Find and Replace)" }
+
+    - commands: ["set-floating"]
+      match:
+          - window_process: { equals: "devenv" } # Float the VS Rename dialog
+            window_title: { equals: "Rename" }
+          - window_process: { equals: "devenv" } # Float the VS Find and Replace dialog
+            window_title: { equals: "Find and Replace" }
+          - window_process: { equals: "devenv" } # Float the VS Search
+            window_title: { equals: "Search" }
+
     - commands: ["ignore"]
       match:
           # Ignores any Zebar windows.
@@ -249,6 +244,8 @@ window_rules:
           - window_process: { equals: "Overwolf" }
           # The Finals
           - window_process: { equals: "Discovery" }
+          # Other The Finals?
+          - window_process: { equals: "Discovery-d" }
           - window_process: { equals: "eldenring" }
           - window_process: { equals: "DCS" }
           # Otherwise it crashes on model load.
@@ -261,7 +258,7 @@ window_rules:
           - window_process: { equals: "bf1" }
           - window_process: { equals: "BF2042" }
 
-          # Ignores picture-in-picture windos for browsers.
+          # Ignores picture-in-picture windows for browsers.
           - window_title: { regex: "[Pp]ictue.in.[Pp]icture" }
             window_class: { regex: "Chrome_WidgetWin_1|MozillaDialogClass" }
 
@@ -274,8 +271,15 @@ window_rules:
             window_class: { regex: "HwndWrapper" }
 
 binding_modes:
+    - name: "test"
+      keybindings:
+          - commands: ["wm-disable-binding-mode --name test"]
+            bindings: ["lwin+escape"]
 
 keybindings:
+    - commands: ["wm-enable-binding-mode --name test"]
+      bindings: ["lwin+escape"]
+
     # Shift focus in a given direction.
     - commands: ["focus --direction left"]
       bindings: ["lwin+left"]
@@ -413,3 +417,22 @@ keybindings:
       bindings: ["lwin+shift+8"]
     - commands: ["move --workspace 9", "focus --workspace 9"]
       bindings: ["lwin+shift+9"]
+
+    - commands: ["move --workspace 1"]
+      bindings: ["lwin+alt+1"]
+    - commands: ["move --workspace 2"]
+      bindings: ["lwin+alt+2"]
+    - commands: ["move --workspace 3"]
+      bindings: ["lwin+alt+3"]
+    - commands: ["move --workspace 4"]
+      bindings: ["lwin+alt+4"]
+    - commands: ["move --workspace 5"]
+      bindings: ["lwin+alt+5"]
+    - commands: ["move --workspace 6"]
+      bindings: ["lwin+alt+6"]
+    - commands: ["move --workspace 7"]
+      bindings: ["lwin+alt+7"]
+    - commands: ["move --workspace 8"]
+      bindings: ["lwin+alt+8"]
+    - commands: ["move --workspace 9"]
+      bindings: ["lwin+alt+9"]
