@@ -199,12 +199,21 @@ window_rules:
 
     - commands: ["set-floating"]
       match:
+          - window_title: { includes: "FLOAT" }
           - window_process: { equals: "devenv" } # Float the VS Rename dialog
             window_title: { equals: "Rename" }
           - window_process: { equals: "devenv" } # Float the VS Find and Replace dialog
             window_title: { equals: "Find and Replace" }
           - window_process: { equals: "devenv" } # Float the VS Search
             window_title: { equals: "Search" }
+
+    # Godot
+    - commands: ["set-floating"]
+      on: ["manage"] # Otherwise when the project editor renames itself to "<Project Name> (DEBUG)" it will match this rule for the first time and become floating.
+      match:
+          - window_process: { regex: "[Gg]odot" }
+            window_class: { equals: "Engine" }
+            window_title: { not_regex: "(^$|Godot Engine)" }
 
     - commands: ["ignore"]
       match:
@@ -246,12 +255,14 @@ window_rules:
           - window_process: { equals: "Discovery" }
           # Other The Finals?
           - window_process: { equals: "Discovery-d" }
+          # Other other The Finals?
+          - window_process: { equals: "Discovery-e" }
           - window_process: { equals: "eldenring" }
           - window_process: { equals: "DCS" }
           # Otherwise it crashes on model load.
           - window_process: { equals: "ModelViewer2" }
-          # Battlefield 6 Beta
-          - window_process: { equals: "bf6event" }
+          # Battlefield 6
+          - window_process: { equals: "bf6" }
           # Arena breakout infinite
           - window_process: { equals: "UAGame" }
           - window_process: { equals: "EscapeFromTarkov" }

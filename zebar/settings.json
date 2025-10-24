@@ -5,6 +5,11 @@
       "pack": "neobrutal-fork",
       "widget": "default",
       "preset": "default"
+    },
+    {
+      "pack": "neosoft-zebar",
+      "widget": "default",
+      "preset": "default"
     }
   ]
 }
